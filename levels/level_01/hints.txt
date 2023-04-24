@@ -1,0 +1,5 @@
+Hints:
+
+1. How can you determine the address of the return pointer?
+2. Which characters can you use to overwrite the return address?
+3. What is the address of the message that will lead you to the next exploit?

@@ -1,4 +1,6 @@
 import sqlite3
+import os
+import glob
 
 class LevelManager:
     def __init__(self):
@@ -9,8 +11,31 @@ class LevelManager:
         self.player_progress = self.load_player_progress()
 
     def load_levels(self):
-        # Load level data from the 'levels' directory or another source
-        pass
+        levels = []
+        level_paths = sorted(glob.glob('levels/level_*'))
+
+        for i, level_path in enumerate(level_paths, start=1):
+            level = {
+                'number': i,
+                'path': f'{level_path}/vulnerable_code.c',
+                'instructions': self.load_level_instructions(level_path),
+                'hints': self.load_level_hints(level_path)
+            }
+            levels.append(level)
+
+        return levels
+
+    def save_progress(self):
+        with open('progress.txt', 'w') as f:
+            f.write(str(self.player_progress))
+
+    def load_level_instructions(self, level_path):
+        with open(f'{level_path}/instructions.txt', 'r') as f:
+            return f.read()
+
+    def load_level_hints(self, level_path):
+        with open(f'{level_path}/hints.txt', 'r') as f:
+            return f.read()
 
     def create_progress_table(self):
         self.cursor.execute('''CREATE TABLE IF NOT EXISTS progress

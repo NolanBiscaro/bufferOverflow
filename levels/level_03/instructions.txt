@@ -1,0 +1,2 @@
+Instructions:
+You have gained access to the next level of Technotron's secure systems, but now you need to gain administrative access. You have discovered a program that takes user input and uses it to create a welcome message. This time, however, you must gain a shell by overwriting the return address and injecting shellcode into the program's memory. Can you modify the program's behavior to get a shell and gain administrative access?

@@ -1,0 +1,5 @@
+Hints:
+
+1. How can you determine the size and location of the buffer on the heap?
+2. Which characters can you use to fill the buffer and overwrite adjacent heap metadata?
+3. How can you ensure that the program's other heap structures remain unchanged?

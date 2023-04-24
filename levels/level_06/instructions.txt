@@ -1,0 +1,2 @@
+Instructions:
+You have uncovered a new program in Technotron's secure systems that takes user input and performs an integer overflow, leading to an inadequate buffer size allocation. This vulnerability can be exploited to trigger a buffer overflow and gain control of the program's execution. Can you modify the program's behavior to print a message that will lead you to the next exploit?

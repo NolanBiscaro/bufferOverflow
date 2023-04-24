@@ -1,0 +1,2 @@
+Instructions:
+You have successfully exploited Technotron's welcome message program, but now you need to gain access to deeper levels of their secure systems. You have found a similar program to the previous level, but this time there are additional variables on the stack that you must account for. You still have no bounds checking on the user input, but you need to make sure you overwrite the return address while maintaining the program's stability. Can you successfully modify the program's behavior to print a message that will lead you to the next exploit?

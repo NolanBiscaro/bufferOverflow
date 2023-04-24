@@ -1,0 +1,2 @@
+Instructions:
+You have been tasked with infiltrating Technotron's secure systems by exploiting a vulnerability in their welcome message program. The program takes user input and uses it to create a welcome message, but there is no bounds checking on the input, which means you can overwrite the program's return address and gain control of its execution. Can you modify the program's behavior to print a message that will lead you to the next exploit?

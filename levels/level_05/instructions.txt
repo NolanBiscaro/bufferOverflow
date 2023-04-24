@@ -1,0 +1,2 @@
+Instructions:
+You have gained access to even more of Technotron's secure systems, but there is still more to uncover. You have found a program that allocates a buffer on the heap containing function pointers, and takes user input to fill it. There is no bounds checking on the user input, which means you can overwrite the function pointers to redirect program execution. Can you modify the program's behavior to print a message that will lead you to the next exploit?

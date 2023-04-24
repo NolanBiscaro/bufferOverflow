@@ -1,0 +1,5 @@
+Hints:
+
+1. What is shellcode, and how can you craft it to gain a shell?
+2. How can you determine the address of the buffer and the return address?
+3. Which instructions should your shellcode contain to gain administrative access?

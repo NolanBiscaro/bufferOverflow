@@ -1,6 +1,7 @@
 from game_engine.level_manager import LevelManager
 from game_engine.exploit_executor import ExploitExecutor
 from game_engine.exploit_validator import ExploitValidator
+from utils.exploit_editor import ExploitEditor
 
 from prompt_toolkit import PromptSession
 
@@ -10,18 +11,38 @@ class UserInterface:
         self.level_manager = LevelManager()
         self.exploit_executor = ExploitExecutor()
         self.exploit_validator = ExploitValidator()
+        self.exploit_editor = ExploitEditor()
 
     def display_level_instructions(self, level):
         # Display level-specific instructions and vulnerable code to the player
-        pass
+        print(f"Level {level['number']}:")
+        print("Instructions:")
+        print(level['instructions'])
+        print("\nVulnerable Code:")
+        with open(level['path'], 'r') as f:
+            print(f.read())
 
     def get_exploit_input(self):
         # Get the player's exploit code input using the session.prompt() function
-        pass
+        return self.exploit_editor.get_code()
 
     def handle_menu(self):
         # Handle user input for menu options (e.g., save progress, exit game)
-        pass
+        while True:
+            print("Menu options:")
+            print("1. Save progress")
+            print("2. Exit game")
+            choice = self.session.prompt("Choose an option: ")
+
+            if choice == '1':
+                self.level_manager.save_progress()
+                print("Progress saved.")
+                break
+            elif choice == '2':
+                print("Goodbye!")
+                exit()
+            else:
+                print("Invalid option. Try again.")
 
     def start_game(self):
         print("Welcome to the Buffer Overflow Game!")

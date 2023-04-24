@@ -1,0 +1,2 @@
+Instructions:
+With administrative access, you have access to more of Technotron's secure systems. You have found a program that allocates a buffer on the heap and takes user input to fill it. There is no bounds checking on the user input, which means you can overwrite adjacent heap metadata or data structures to gain control of the program's execution. Can you modify the program's behavior to print a message that will lead you to the next exploit?

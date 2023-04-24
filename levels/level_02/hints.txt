@@ -1,0 +1,5 @@
+Hints:
+
+How can you determine the offset between the buffer and the return address?
+Which characters can you use to fill the buffer and overwrite the return address?
+How can you ensure that the program's other variables remain unchanged?
