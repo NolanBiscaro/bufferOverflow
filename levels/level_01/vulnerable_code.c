@@ -13,10 +13,3 @@ void vulnerable_function() {
     gets(buffer);
     printf("You entered: %s\n", buffer);
 }
-
-int main() {
-    printf("Welcome to Level 1: Basic stack-based buffer overflow\n");
-    vulnerable_function();
-    printf("Exiting the program...\n");
-    return 0;
-}

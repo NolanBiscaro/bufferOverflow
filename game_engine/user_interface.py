@@ -20,7 +20,8 @@ class UserInterface:
         print(level['instructions'])
         print("\nVulnerable Code:")
         with open(level['path'], 'r') as f:
-            print(f.read())
+            self.exploit_editor.show_code(f.read())
+ 
 
     def get_exploit_input(self):
         # Get the player's exploit code input using the session.prompt() function
