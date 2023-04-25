@@ -7,6 +7,8 @@ from prompt_toolkit import PromptSession
 
 import os
 import time
+import shutil
+import tempfile
 
 class UserInterface:
     def __init__(self):
@@ -30,10 +32,10 @@ class UserInterface:
 
     def display_level_instructions(self, level):
         # Display level-specific instructions and vulnerable code to the player
-        self.print_border()
-        self.print_slowly(f"Level {level['number']}:")
-        self.print_slowly("Instructions:")
-        self.print_slowly(level['instructions'])
+        # self.print_border()
+        # self.print_slowly(f"Level {level['number']}:")
+        # self.print_slowly("Instructions:")
+        # self.print_slowly(level['instructions'])
         self.print_slowly("\nVulnerable Code:")
 
         with open(level['path'], 'r') as f:
@@ -68,12 +70,18 @@ class UserInterface:
             user_input = self.session.prompt("> ")
 
             if user_input.startswith("exploit"):
-                exploit_code = self.get_exploit_input()
-                exploit_result = self.exploit_executor.execute_exploit(exploit_code)
+                with tempfile.TemporaryDirectory() as tempdir:
+                    with open(current_level['path'], 'r') as f:
+                        vulnerable_code = f.read()
+                        self.exploit_executor.enter_shell(vulnerable_code, tempdir)
+                        exploit_result = self.exploit_executor.execute_exploit(tempdir)
 
-                if self.exploit_validator.validate_exploit(exploit_result):
+                success_condition = (exploit_result == current_level['success'])
+                if success_condition:
                     self.print_slowly("Success! You have completed this level.")
                     self.level_manager.advance_to_next_level()
+                    # clean up the dir in sandbox for this level
+                    shutil(tempdir)
                 else:
                     self.print_slowly("Exploit failed. Try again.")
             elif user_input.startswith("menu"):

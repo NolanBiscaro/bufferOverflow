@@ -19,7 +19,8 @@ class LevelManager:
                 'number': i,
                 'path': f'{level_path}/vulnerable_code.c',
                 'instructions': self.load_level_instructions(level_path),
-                'hints': self.load_level_hints(level_path)
+                'hints': self.load_level_hints(level_path),
+                'success': 'Exploit Successful'
             }
             levels.append(level)
 
@@ -36,7 +37,7 @@ class LevelManager:
     def load_level_hints(self, level_path):
         with open(f'{level_path}/hints.txt', 'r') as f:
             return f.read()
-
+    
     def create_progress_table(self):
         self.cursor.execute('''CREATE TABLE IF NOT EXISTS progress
                                (id INTEGER PRIMARY KEY, level INTEGER)''')
