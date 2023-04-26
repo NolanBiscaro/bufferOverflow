@@ -11,7 +11,7 @@ class Sandbox:
 
     def prepare_sandbox_image(self):
         dockerfile = '''
-        FROM ubuntu:latest
+        FROM i386/ubuntu:18.04
 
         RUN apt-get update && \
             apt-get install -y gcc libc6-dev binutils gdb vim emacs
@@ -35,11 +35,19 @@ class Sandbox:
         exploit_code_path = os.path.join(tempdir, "exploit.py")
         open(exploit_code_path, "w").close()
 
-        # Start the Docker container and drop the user into a shell
-        print("Entering the Docker container shell...")
-        os.system(f"docker run -it --rm -v {tempdir}:/src {self.image_name} /bin/bash")
+        #compile the vulnerable.c so that that the user can use gdb on it
+        self.client.containers.run(
+            self.image_name,
+            volumes={tempdir: {"bind": "/src", "mode": "rw"}},
+            command="sh -c 'cd /src && gcc -fno-stack-protector -o vulnerable_code vulnerable_code.c'",
+            cap_add=["SYS_PTRACE"],
+            security_opt=["seccomp=unconfined"]
+        )
 
-        return tempdir
+        # Start the Docker container and drop the user into a shell
+        print("Dropping into Tehchnotron shell...")
+        print("When you are finished writing your exploit, simply type 'exit' in the shell to return here and run your exploit")
+        os.system(f"docker run -it --privileged --rm -v {tempdir}:/src {self.image_name} /bin/bash -c 'cd /src && exec bash'")
 
     
     def get_address_information(self, vulnerable_code):
@@ -85,13 +93,8 @@ class Sandbox:
 
     def run_exploit_against_vulnerable_program(self, tempdir):
         if tempdir:
-            #compile the vulnerable.c
-            self.client.containers.run(
-                self.image_name,
-                volumes={tempdir: {"bind": "/src", "mode": "rw"}},
-                command="sh -c 'cd /src && gcc -fno-stack-protector -o vulnerable_code vulnerable_code.c'"
-            )
             
+            # run the exploit (note that vulnerable_code is comiled when we drop into the shell)
             output = self.client.containers.run(
                 self.image_name,
                 volumes={tempdir: {"bind": "/src", "mode": "ro"}},
